@@ -1,0 +1,8 @@
+[core]
+    remote = aws-remote
+['remote "myremote"']
+    url = gdrive://1wVDKNBrsxVGgnwlUMy9Ab20Xfi325xbj
+['remote "local_remote"']
+    url = /home/ubuntu/dvcstore
+['remote "aws-remote"']
+    url = s3://gdp-per-capita-dvcstore
