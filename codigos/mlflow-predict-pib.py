@@ -90,7 +90,7 @@ with mlflow.start_run():
     print(f"Mean Squared Error (MSE): {mse:.2f}")
     print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 
-# Paso 7: Realizar la Proyección para 2024 y Exportar el Resultado
+# Paso 7: Realizar la Proyección para 2024
 test_data = df[df['Year'] == 2023].copy()
 test_data['Year'] = 2024  # Cambiar el año a 2024 para reflejar la predicción
 
@@ -115,8 +115,5 @@ columns_output = ['Original Country Name', 'Country Code', 'Year',
 
 output_data = test_data[columns_output]
 
-# Exportar el Resultado Final a un Archivo Excel
-file_path = 'predictions_2024_formatted.xlsx'
-output_data.to_excel(file_path, index=False)
-
-print(f"Archivo Excel generado en: {file_path}")
+# Mostrar las primeras filas de la proyección
+print(output_data.head())
