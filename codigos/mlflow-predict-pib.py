@@ -12,6 +12,11 @@ import mlflow.sklearn
 url = 'https://raw.githubusercontent.com/cagutig/per-capita-project/refs/heads/main/data/df_gdp_concatenado.csv'
 df = pd.read_csv(url)
 
+# defina el servidor para llevar el registro de modelos y artefactos
+# mlflow.set_tracking_uri('http ://0.0.0.0:5000')
+# registre el experimento
+experiment = mlflow.set_experiment("GDP_Prediction_Model")
+
 # Organizar y preparar los datos
 df = df.sort_values(['Country Name', 'Year'])
 df['Original Country Name'] = df['Country Name']
@@ -117,3 +122,5 @@ output_data = test_data[columns_output]
 
 # Mostrar las primeras filas de la proyección
 print(output_data.head())
+
+
