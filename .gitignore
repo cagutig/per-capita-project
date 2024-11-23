@@ -1,0 +1,6 @@
+# Ignorar el directorio de MLflow
+mlruns/
+
+# Ignorar otros archivos innecesarios (opcional)
+*.log
+*.tmp
