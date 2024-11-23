@@ -128,9 +128,9 @@ with mlflow.start_run():
     mlflow.sklearn.log_model(model, "random_forest_model")
 
     # Registrar las métricas
-    mlflow.log_metric("mae", mae)
-    mlflow.log_metric("mse", mse)
-    mlflow.log_metric("rmse", rmse)
+    mlflow.log_metric("MAE", mae)
+    mlflow.log_metric("MSE", mse)
+    mlflow.log_metric("RMSE", rmse)
 
     # Imprimir las métricas para verificar
     print(f"Mean Absolute Error (MAE): {mae:.2f}")
@@ -179,3 +179,4 @@ predicciones_2024 = data_2024[['Country Name', 'Year', 'GDP per capita (current 
 
 # Mostrar las primeras filas de la proyección
 print(predicciones_2024.head())
+
