@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dshar/Downloads/Proyecto%20Despliegue/per-capita-project/mlruns/478272637181089501/87dac459b28d4f11920b30085cddb7a5/artifacts
+end_time: 1731340667313
+entry_point_name: ''
+experiment_id: '478272637181089501'
+lifecycle_stage: active
+run_id: 87dac459b28d4f11920b30085cddb7a5
+run_name: aged-chimp-604
+run_uuid: 87dac459b28d4f11920b30085cddb7a5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731340660551
+status: 3
+tags: []
+user_id: dshar

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dshar/Downloads/Proyecto%20Despliegue/per-capita-project/mlruns/478272637181089501/6da95eead8564731b68a2b0edd68b7fa/artifacts
+end_time: 1731340357833
+entry_point_name: ''
+experiment_id: '478272637181089501'
+lifecycle_stage: active
+run_id: 6da95eead8564731b68a2b0edd68b7fa
+run_name: auspicious-finch-242
+run_uuid: 6da95eead8564731b68a2b0edd68b7fa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731340349487
+status: 3
+tags: []
+user_id: dshar

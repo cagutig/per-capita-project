@@ -1,4 +1,3 @@
-# Paso 1: Importar Librerías y Preparar los Datos
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
@@ -11,6 +10,11 @@ import mlflow.sklearn
 # Leer el archivo CSV desde el repositorio de GitHub
 url = 'https://raw.githubusercontent.com/cagutig/per-capita-project/refs/heads/main/data/df_gdp_concatenado.csv'
 df = pd.read_csv(url)
+
+# Definir el servidor para llevar el registro de modelos y artefactos
+# mlflow.set_tracking_uri('http://0.0.0.0:5000')
+# Registrar el experimento
+mlflow.set_experiment("GDP_Prediction_Model")
 
 # Organizar y preparar los datos
 df = df.sort_values(['Country Name', 'Year'])
@@ -54,28 +58,33 @@ mlflow.set_experiment("GDP_Prediction_Model")
 
 with mlflow.start_run():
     # Paso 6: Entrenar el Modelo Ajustado con RandomForestRegressor
+    n_estimators = 200
+    max_depth = 15
+    min_samples_split = 5
+    min_samples_leaf = 4
+
     model = RandomForestRegressor(
-        n_estimators=200,         # Número de árboles en el bosque
-        max_depth=15,             # Profundidad máxima de cada árbol
-        min_samples_split=5,      # Muestras mínimas necesarias para dividir un nodo
-        min_samples_leaf=4,       # Muestras mínimas necesarias en una hoja
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+        min_samples_leaf=min_samples_leaf,
         random_state=42
     )
 
     # Entrenar el modelo ajustado
     model.fit(X_train_imputed, y_train)
 
-    # Realice predicciones de validación
+    # Realizar predicciones de validación
     y_val_pred = model.predict(X_val_imputed)
     mae = mean_absolute_error(y_val, y_val_pred)
     mse = mean_squared_error(y_val, y_val_pred)
     rmse = np.sqrt(mse)
 
     # Registrar los parámetros del modelo
-    mlflow.log_param("n_estimators", 200)
-    mlflow.log_param("max_depth", 15)
-    mlflow.log_param("min_samples_split", 5)
-    mlflow.log_param("min_samples_leaf", 4)
+    mlflow.log_param("n_estimators", n_estimators)
+    mlflow.log_param("max_depth", max_depth)
+    mlflow.log_param("min_samples_split", min_samples_split)
+    mlflow.log_param("min_samples_leaf", min_samples_leaf)
 
     # Registrar el modelo
     mlflow.sklearn.log_model(model, "random_forest_model")

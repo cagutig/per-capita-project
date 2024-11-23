@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dshar/Downloads/Proyecto%20Despliegue/per-capita-project/mlruns/478272637181089501/162b31438e694f27b438c879cacc53b9/artifacts
+end_time: 1731340485917
+entry_point_name: ''
+experiment_id: '478272637181089501'
+lifecycle_stage: active
+run_id: 162b31438e694f27b438c879cacc53b9
+run_name: receptive-croc-912
+run_uuid: 162b31438e694f27b438c879cacc53b9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731340479977
+status: 3
+tags: []
+user_id: dshar

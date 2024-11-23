@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dshar/Downloads/Proyecto%20Despliegue/per-capita-project/mlruns/478272637181089501/39010983411940c798838e30ddee731c/artifacts
+end_time: 1731340454687
+entry_point_name: ''
+experiment_id: '478272637181089501'
+lifecycle_stage: active
+run_id: 39010983411940c798838e30ddee731c
+run_name: debonair-fish-168
+run_uuid: 39010983411940c798838e30ddee731c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731340446847
+status: 3
+tags: []
+user_id: dshar
