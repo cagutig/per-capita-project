@@ -158,23 +158,7 @@ app.layout = html.Div(style={
              'justify-content': 'center', 'align-items': 'center','text-align': 'center',
         }
     )
-    ,html.Div([
-    html.Button(
-        "Predecir",
-        id="boton_predecir",
-        n_clicks=0,
-        style={
-            'background-color': '#00274D',
-            'color': '#FFCC00',
-            'font-weight': 'bold',
-            'padding': '10px 20px',
-            'border-radius': '5px',
-            'border': 'none',
-            'cursor': 'pointer',
-            'text-align': 'center'
-        }
-    )
-], style={'display': 'flex', 'justify-content': 'center', 'margin-top': '20px'}),
+    ,
 ], style={'display': 'flex', 'justify-content': 'space-around', 'flex-wrap': 'wrap', 'align-items': 'center'})
 ], style={'background-color': 'rgba(255, 255, 255, 0.8)', 'border-radius': '10px', 'margin-bottom': '20px'})
 
@@ -240,7 +224,6 @@ app.layout = html.Div(style={
 
 @app.callback(
     [
-        Output("campo_prediccion", "value"),
         Output("input_electricidad", "value"),
         Output("input_inversion", "value"),
         Output("input_educacion", "value"),
@@ -248,8 +231,7 @@ app.layout = html.Div(style={
     ],
     [Input("filtro_paises", "value")]
 )
-def actualizar_prediccion_y_valores(pais_seleccionado):
-    prediccion = None
+def actualizar_valores(pais_seleccionado):
     electricidad = None
     inversion = None
     educacion = None
@@ -273,22 +255,54 @@ def actualizar_prediccion_y_valores(pais_seleccionado):
             educacion = obtener_valor_o_promedio("Government expenditure on education, total (% of GDP)")
             crecimiento = obtener_valor_o_promedio("Population growth (annual %)")
 
-            if "GDP per capita (current US$)" in datos_max_ano and not datos_max_ano["GDP per capita (current US$)"].isnull().all():
-                prediccion = datos_max_ano["GDP per capita (current US$)"].values[0]
-            elif "GDP per capita (current US$)" in df_filtrado and not df_filtrado["GDP per capita (current US$)"].isnull().all():
-                prediccion = df_filtrado["GDP per capita (current US$)"].mean()
+    return electricidad, inversion, educacion, crecimiento
 
-    return prediccion, electricidad, inversion, educacion, crecimiento
+import requests
+
+@app.callback(
+    Output("campo_prediccion", "value"),
+    [
+        Input("filtro_paises", "value"),
+        Input("input_electricidad", "value"),
+        Input("input_inversion", "value"),
+        Input("input_educacion", "value"),
+        Input("input_crecimiento", "value"),
+    ]
+)
+def predecir_con_api(pais, electricidad, inversion, educacion, crecimiento):
+    if not pais or electricidad is None or inversion is None or educacion is None or crecimiento is None:
+        return None
+    
+    data = {
+        "Access_to_electricity": electricidad,
+        "Foreign_direct_investment": inversion,
+        "Government_expenditure": educacion,
+        "Population_growth": crecimiento,
+        "Country_Name": pais
+    }
+
+    url = "http://54.86.117.102:8000/predict"
+    try:
+        response = requests.post(url, json=data)
+        response.raise_for_status() 
+        resultado = response.json()
+        return resultado.get("prediction", None) 
+    except requests.exceptions.RequestException as e:
+        print(f"Error al llamar a la API: {e}")
+        return None
 
 
 
 @app.callback(
     Output("grafico_linea", "figure"),
-    [Input("filtro_ano_inicio", "value"),
-     Input("filtro_ano_fin", "value"),
-     Input("filtro_paises", "value")]
+    [
+        Input("campo_prediccion", "value"), 
+        Input("filtro_ano_inicio", "value"),
+        Input("filtro_ano_fin", "value"),
+        Input("filtro_paises", "value"),
+    ]
 )
-def actualizar_grafico_linea(ano_inicio, ano_fin, pais_seleccionado):
+def actualizar_grafico_linea_con_prediccion(prediccion, ano_inicio, ano_fin, pais_seleccionado):
     df_filtrado = df.copy()
 
     if ano_inicio is None:
@@ -314,22 +328,24 @@ def actualizar_grafico_linea(ano_inicio, ano_fin, pais_seleccionado):
         title="Tendencia del PIB per Cápita por País"
     )
 
-    if not df_filtrado.empty:
-        ultimo_valor = df_filtrado.groupby("Country Name")["GDP per capita (current US$)"].last().reset_index()
-        ultimo_valor["Year"] = df["Year"].max() + 1 
+    if prediccion is not None and pais_seleccionado:
         fig.add_scatter(
-            x=ultimo_valor["Year"],
-            y=ultimo_valor["GDP per capita (current US$)"],
+            x=[ano_fin + 1], 
+            y=[prediccion],
             mode="markers",
             marker=dict(color="red", size=10, symbol="star"),
             name="PIB Predicho",
-            text=ultimo_valor["Country Name"],
+            text=[f"Predicción para {pais_seleccionado}"],
             hoverinfo="text+y"
         )
-
-    fig.update_layout(xaxis_title="Año", yaxis_title="PIB per Cápita (US$)")
+        
+    fig.update_layout(
+        xaxis_title="Año",
+        yaxis_title="PIB per Cápita (US$)"
+    )
 
     return fig
+
 
 
 
@@ -438,8 +454,8 @@ def actualizar_grafico_variable_economica(variable_seleccionada, ano_inicio, ano
 
 
 if __name__ == "__main__":
-#    app.run_server(debug=True, host='0.0.0.0', port=8069) 
-    app.run_server(debug=True, port=8069) 
+    app.run_server(debug=True, host='0.0.0.0', port=8069) 
+#    app.run_server(debug=True, port=8069) 
 
 
 # %%
