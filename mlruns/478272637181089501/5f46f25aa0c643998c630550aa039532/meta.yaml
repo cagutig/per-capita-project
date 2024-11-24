@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/dshar/Downloads/Proyecto%20Despliegue/per-capita-project/mlruns/478272637181089501/5f46f25aa0c643998c630550aa039532/artifacts
+end_time: 1732396361381
+entry_point_name: ''
+experiment_id: '478272637181089501'
+lifecycle_stage: active
+run_id: 5f46f25aa0c643998c630550aa039532
+run_name: merciful-fish-202
+run_uuid: 5f46f25aa0c643998c630550aa039532
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1732396331693
+status: 3
+tags: []
+user_id: dshar
