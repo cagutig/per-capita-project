@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Instala las dependencias necesarias
-RUN pip install --no-cache-dir dash==2.6.1 plotly==5.10.0 pandas==1.4.4 jinja2 flask
+RUN pip install --no-cache-dir dash==2.6.1 plotly==5.10.0 pandas==1.4.4 jinja2 flask requests
 
 # Expone el puerto del tablero
 EXPOSE 8069

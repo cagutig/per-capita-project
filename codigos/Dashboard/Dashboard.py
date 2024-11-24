@@ -6,13 +6,14 @@
 
 # %%
 import pandas as pd
+import requests
 
 df = pd.read_csv('../../data/pib.csv', sep=',')
 df.head()
 
 # %%
 from dash import Dash, dcc, html, dash_table
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.express as px
 import pandas as pd
 
@@ -157,6 +158,23 @@ app.layout = html.Div(style={
              'justify-content': 'center', 'align-items': 'center','text-align': 'center',
         }
     )
+    ,html.Div([
+    html.Button(
+        "Predecir",
+        id="boton_predecir",
+        n_clicks=0,
+        style={
+            'background-color': '#00274D',
+            'color': '#FFCC00',
+            'font-weight': 'bold',
+            'padding': '10px 20px',
+            'border-radius': '5px',
+            'border': 'none',
+            'cursor': 'pointer',
+            'text-align': 'center'
+        }
+    )
+], style={'display': 'flex', 'justify-content': 'center', 'margin-top': '20px'}),
 ], style={'display': 'flex', 'justify-content': 'space-around', 'flex-wrap': 'wrap', 'align-items': 'center'})
 ], style={'background-color': 'rgba(255, 255, 255, 0.8)', 'border-radius': '10px', 'margin-bottom': '20px'})
 
@@ -417,6 +435,7 @@ def actualizar_grafico_variable_economica(variable_seleccionada, ano_inicio, ano
                   title=f"Tendencia de {titulo_variable}")
     fig.update_layout(xaxis_title="Año", yaxis_title=titulo_variable)
     return fig
+
 
 if __name__ == "__main__":
 #    app.run_server(debug=True, host='0.0.0.0', port=8069) 
