@@ -454,8 +454,8 @@ def actualizar_grafico_variable_economica(variable_seleccionada, ano_inicio, ano
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, host='0.0.0.0', port=8069) 
-#    app.run_server(debug=True, port=8069) 
+#    app.run_server(debug=True, host='0.0.0.0', port=8069) 
+    app.run_server(debug=True, port=8069) 
 
 
 # %%
