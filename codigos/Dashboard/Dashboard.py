@@ -282,7 +282,7 @@ def predecir_con_api(pais, electricidad, inversion, educacion, crecimiento):
         "Country_Name": pais
     }
 
-    url = "http://54.86.117.102:8000/predict"
+    url = "http://100.26.100.72:8000/predict"
     try:
         response = requests.post(url, json=data)
         response.raise_for_status() 
