@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Instala las dependencias necesarias
-RUN pip install --no-cache-dir pandas numpy fastapi pydantic sklearn joblib uvicorn
+RUN pip install --no-cache-dir pandas numpy fastapi pydantic scikit-learn joblib uvicorn
 
 # Expone el puerto del tablero
 EXPOSE 8000
